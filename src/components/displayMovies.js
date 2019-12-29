@@ -1,25 +1,50 @@
 import React from "react";
-import MovieList from "./movieList";
+import {Row, Col, Label, Table} from "reactstrap";
 
-const Showlist = ({movie}) => {
+const MovieIndex = ({movie, index}) => {
     return(
-        <div className="row mt-2 ml-4">
-        <div className="col-sm-2 ml-2">{movie.name}</div>
-        <div className="col-sm-2 ml-2">{movie.yoy}</div>
-        <div className="col-sm-2 ml-2">{movie.plot}</div>
-        <div className="col-sm-3 ml-2">{movie.cast}</div>
-        </div>
+        <tr>
+            <th scope="row">{index+1}</th>
+            <td>{movie.name}</td>
+            <td>{movie.yoy}</td>
+            <td>{movie.plot}</td>
+            <td>{movie.cast}</td>
+            <td><img src={movie.poster} /></td>
+        </tr>
+    )
+
+}
+
+const DisplayMovies = () => {
+
+    // const [picture, changePicture] = useState([]);
+
+    // let onDrop = (pic) => {
+    //     let picture = picture;
+    //     picture.push(pic);
+    //     changePicture(picture);
+    // }
+    
+    const list = JSON.parse(localStorage.getItem("movies"));
+    
+    return(
+        <Table dark>
+            <thead>
+                <tr>
+                <th>#</th>
+                <th>Movie Name</th>
+                <th>Year of Release</th>
+                <th>Plot</th>
+                <th>Cast</th>
+                <th>Poster</th>
+                </tr>
+            </thead>
+            <tbody>
+            {list.map((l,i) => <MovieIndex movie={l} index={i}/>)}
+            </tbody>
+        </Table>
     )
 }
 
-const DisplayList = () => {
-    let list = JSON.parse(localStorage.getItem("movies"));
-    return(
-        <div>
-            {list.map(l => <Showlist movie={l}/>
-            )}
-        </div>
-    )
-}
 
-export default DisplayList;
+export default DisplayMovies;
